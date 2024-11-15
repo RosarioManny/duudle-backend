@@ -9,4 +9,6 @@ class Home(APIView):
     content = {'message': 'welcome to Whataduudle'}
     return Response(content)
 
-class GameDetail)
+class GameDetail(generics.RetrieveUpdateDestroyAPIView):
+  # queryset = 
+  fields = '__all__'
