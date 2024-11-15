@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -8,4 +9,4 @@ class Home(APIView):
     content = {'message': 'welcome to Whataduudle'}
     return Response(content)
 
-class GameDetail()
+class GameDetail)
