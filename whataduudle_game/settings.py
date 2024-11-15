@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fc-cog%926s0e1ng(hmtcq*t3^r9s(!0(k&x7^f-%m(@oa@m0i'
+SECRET_KEY = 'django-insecure-5_!_8l&t4asy-hdk-b27hr$fiks8%b7*ygz#i$wql@-r*zufi='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'main_app',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +77,8 @@ WSGI_APPLICATION = 'whataduudle_game.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'whataduudle_game',
     }
 }
 
