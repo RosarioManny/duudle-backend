@@ -22,3 +22,11 @@ class GameSerializer(serializers.ModelSerializer):
   class Meta:
     model = Game
     field = '__all__'
+    
+    
+    
+# Word serializer
+class WordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Word
+        fields = '__all__'
