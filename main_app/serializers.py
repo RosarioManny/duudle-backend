@@ -19,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
     return user 
 
 class GameSerializer(serializers.ModelSerializer):
+  user = serializers.PrimaryKeyRelatedField(read_only=True)
   class Meta:
     model = Game
     field = '__all__'

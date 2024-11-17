@@ -5,6 +5,9 @@ from rest_framework.response import Response
 from .models import Game, Word
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, GameSerializer
+# Authu
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 
 # Create your views here.g
 class Home(APIView):
@@ -17,6 +20,20 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
   fields = '__all__'
 
 class CreateUserView(generics.CreateAPIView):
+  queryset = User.objects.all()
+  serializer_class = UserSerializer
+  
+  def create(self, request, *args, **kwargs):
+    response = super().create(request, *args, **kwargs)
+    user = User.objects.get(username=response.data['username'])
+    refresh = RefreshToken.for_user(user)
+    return Response({
+      'refresh': str(refresh),
+      'access': str(refresh.access_token),
+      'user': response.data
+    })
+    
+    
   
 class LoginView(APIView):
   
