@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import Home, CreateUserView, LoginView, VerifyUserView, GameDetails, WordList, WordDetail,WordGame
 
+
 urlpatterns = [
   path('', Home.as_view(), name='home'),
   path('users/register/',CreateUserView.as_view(), name='register'),

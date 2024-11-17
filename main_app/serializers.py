@@ -23,8 +23,6 @@ class GameSerializer(serializers.ModelSerializer):
     model = Game
     field = '__all__'
     
-    
-    
 # Word serializer
 class WordSerializer(serializers.ModelSerializer):
     class Meta:
