@@ -25,4 +25,5 @@ class Game(models.Model):
 class Drawing(models.Model):
   game_id = models.OneToOneField(Game)
   art = models.JSONField()
+  # guess = models.CharField()
 

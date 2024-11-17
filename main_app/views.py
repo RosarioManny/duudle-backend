@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Game, Word
+from .models import Game, Word, Drawing
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, GameSerializer, WordSerializer
 from random import random
@@ -25,13 +25,28 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer = self.get_serializer(instance)
 
     # Get the list of toys not associated with this cat
-    word_associated_with_game = Toy.objects.include(id__in=instance.word.all())
+    word_associated_with_game = Word.objects.include(id__in=instance.word.all())
     word_serializer = WordSerializer(word_associated_with_game, many=True)
 
     return Response({
       'game': serializer.data,
       'word_associated_with_game': word_serializer.data
+      
     })
+  
+  def update(self, request, *args, **kwargs):
+    instance = self.get_object()
+    serializer = self.get_serializer(instance)
+    is_result = self.get_object()
+    # game.result
+    # if Drawing.guess == Game.word:
+    #   Game.result = True
+    # else:
+    #   return 'You Lose',
+    
+    
+    
+
 
 class CreateUserView(generics.CreateAPIView):
   queryset = User.objects.all()
@@ -87,7 +102,9 @@ class WordGame(generics.CreateAPIView):
     # random_id = random.randint(1, max_id)
     # random_object = Game.objects.filter(id=random_id).first()
     return game
-  
+
+
+
 class VerifyUserView(APIView):
   permission_classes = [permissions.IsAuthenticated]
 
