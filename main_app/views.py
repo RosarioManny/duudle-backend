@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Game, Word
 from django.contrib.auth.models import User
-from .serializers import UserSerializer, GameSerializer
+from .serializers import UserSerializer, GameSerializer, WordSerializer
 # Authu
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
@@ -14,10 +14,23 @@ class Home(APIView):
   def get(self, request):
     content = {'message': 'welcome to Whataduudle'}
     return Response(content)
-
+# Game
 class GameDetails(generics.RetrieveUpdateDestroyAPIView):
   queryset = Game.objects.all()
   fields = '__all__'
+
+  def retrieve(self, request, *args, **kwargs):
+    instance = self.get_object()
+    serializer = self.get_serializer(instance)
+
+    # Get the list of toys not associated with this cat
+    word_associated_with_game = Toy.objects.include(id__in=instance.word.all())
+    word_serializer = WordSerializer(word_associated_with_game, many=True)
+
+    return Response({
+      'game': serializer.data,
+      'word_associated_with_game': word_serializer.data
+    })
 
 class CreateUserView(generics.CreateAPIView):
   queryset = User.objects.all()
@@ -33,11 +46,21 @@ class CreateUserView(generics.CreateAPIView):
       'user': response.data
     })
     
-    
-  
 class LoginView(APIView):
-  
+  permission_classes = [permissions.AllowAny]
 
+  def post(self, request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+    user = authenticate(username=username, password=password)
+    if user:
+      refresh = RefreshToken.for_user(user)
+      return Response({
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+        'user': UserSerializer(user).data
+      })
+    return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
   
 # view for word
 class WordList(generics.ListCreateAPIView):
@@ -53,7 +76,7 @@ class WordDetail(generics.RetrieveUpdateDestroyAPIView):
   
 class WordGame(generics.CreateAPIView):
   serializer_class = GameSerializer
- 
+
   
   def get_object(self):
     word_id = self.kwargs['word_id']
