@@ -20,6 +20,8 @@ class CreateUserView(generics.CreateAPIView):
   
 class LoginView(APIView):
   
+
+  
 class VerifyUserView(APIView):
   permission_classes = [permissions.IsAuthenticated]
 
