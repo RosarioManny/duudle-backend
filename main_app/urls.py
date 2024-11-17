@@ -10,5 +10,4 @@ urlpatterns = [
   path('words/', WordList.as_view(), name='word-list'),
   path('words/<int:id>/', WordDetail.as_view(), name='word-list'),
   path('words/<int:id>/game', WordGame.as_view(), name='Word-Game') 
-  
 ]

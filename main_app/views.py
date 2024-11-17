@@ -23,7 +23,7 @@ class WordList(generics.ListCreateAPIView):
   serializer_class = WordSerializer
   
   
-class CatDetail(generics.RetrieveUpdateDestroyAPIView):
+class WordDetail(generics.RetrieveUpdateDestroyAPIView):
   queryset = Word.objects.all()
   serializer_class = WordSerializer
   lookup_field = 'id'
@@ -32,8 +32,6 @@ class CatDetail(generics.RetrieveUpdateDestroyAPIView):
 class WordGame(generics.CreateAPIView):
  serializer_class = GameSerializer
  
- 
-  
   
 def get_object(self):
     word_id = self.kwargs['word_id']
