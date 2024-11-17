@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .models import Game, Word
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, GameSerializer, WordSerializer
+from random import random
 # Authu
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
@@ -80,8 +81,11 @@ class WordGame(generics.CreateAPIView):
   
   def get_object(self):
     word_id = self.kwargs['word_id']
-    word = Word.objects.get(pk=word_id)
-    game = Game.objects.filter(word=word).first()
+    word = Word.objects.get(pk=word_id) #<--- word.prompt?
+    game = Game.objects.filter(word=word).first() #<--- Will only pull the first word. Below is code that could randomize the choice. 
+    # max_id = Game.objects.latest('id').id 
+    # random_id = random.randint(1, max_id)
+    # random_object = Game.objects.filter(id=random_id).first()
     return game
   
 class VerifyUserView(APIView):
