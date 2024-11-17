@@ -6,6 +6,7 @@ from .models import Game, Word, Drawing
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, GameSerializer, WordSerializer, DrawingSerializer
 from random import random
+from rest_framework.response import Response
 # Authu
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
@@ -39,15 +40,11 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer = self.get_serializer(instance)
     is_result = self.get_object()
     # game.result
-    # if Drawing.guess == Game.word:
-    #   Game.result = True
-    # else:
-    #   return 'You Lose',
+    if Drawing.prediction == 'PASS':
+      Game.result = True
+    else:
+      return Response('You Failed.')  
     
-    
-    
-
-
 class CreateUserView(generics.CreateAPIView):
   queryset = User.objects.all()
   serializer_class = UserSerializer
@@ -80,7 +77,7 @@ class LoginView(APIView):
   
 # view for word
 class WordList(generics.ListCreateAPIView):
-  queryset = Word.abjects.all()
+  queryset = Word.objects.all()
   serializer_class = WordSerializer
   
   
