@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = User
-    field = ('id', 'username', 'email', 'password')
+    fields = ('id', 'username', 'email', 'password')
 
   def create(self, validated_data):
     user = User.objects.create_user(
@@ -24,16 +24,15 @@ class WordSerializer(serializers.ModelSerializer):
         model = Word
         fields = '__all__'
 
+class DrawingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Drawing
+        fields = '__all__'
+
 class GameSerializer(serializers.ModelSerializer):
   user = serializers.PrimaryKeyRelatedField(read_only=True)
   word = WordSerializer(many=True, read_only=True)
 
   class Meta:
     model = Game
-    field = '__all__'
-    
-        
-class DrawingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Drawing
-        fields = '__all__'
+    fields = '__all__'

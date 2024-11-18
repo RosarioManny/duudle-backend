@@ -7,10 +7,10 @@ urlpatterns = [
   path('users/register/',CreateUserView.as_view(), name='register'),
   path('users/login/', LoginView.as_view(), name='login'),
   path('users/token/refresh/', VerifyUserView.as_view(), name='token_refesh'),
-  path('games/', GameList.as_view(), name='game-list'),
-  path('games/<int:game_id>/', GameDetails.as_view(), name='Game-Details'),
-  path('words/', WordList.as_view(), name='word-list'),
-  path('words/<int:id>/', WordDetail.as_view(), name='word-list'),
-  path('words/<int:id>/game', WordGame.as_view(), name='Word-Game'), 
-  path('drawings/', DrawingList.as_view(), name='drawing-list'), 
+  path('games/', GameList.as_view(), name='game-list'), #<---- List the Games
+  path('games/<int:id>/', GameDetails.as_view(), name='Game-Details'), #<--- A Games Data
+  path('words/', WordList.as_view(), name='word-list'), #<---- List of Words
+  path('words/<int:id>/', WordDetail.as_view(), name='word-list'), # <---- Details of the word
+  path('words/<int:id>/games/', WordGame.as_view(), name='Word-Game'),  #<---- Starts the Game
+  path('games/<int:id>/drawings/', DrawingList.as_view(), name='drawing-list'), 
 ]
