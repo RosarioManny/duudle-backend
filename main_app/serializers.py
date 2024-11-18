@@ -29,3 +29,8 @@ class WordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Word
         fields = '__all__'
+        
+class DrawingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Drawing
+        fields = '__all__'
