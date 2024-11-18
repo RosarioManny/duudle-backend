@@ -1,27 +1,22 @@
-from rest_framework.exceptions import PermissionDenied
-from django.shortcuts import render
 from rest_framework import generics, status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Game, Word, Drawing
-from django.contrib.auth.models import User
-from .serializers import UserSerializer, GameSerializer, WordSerializer, DrawingSerializer
-from random import random
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-# Authu
+from rest_framework.exceptions import PermissionDenied
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from .models import Game, Word, Drawing
+from .serializers import UserSerializer, GameSerializer, WordSerializer, DrawingSerializer
 
 
-# Create your views here.g
 class Home(APIView):
 
   def get(self, request):
     content = {'message': 'welcome to Whataduudle'}
     return Response(content)
 
-# REGISTER
+
 class CreateUserView(generics.CreateAPIView):
  queryset = User.objects.all()
  serializer_class = UserSerializer
@@ -35,7 +30,8 @@ class CreateUserView(generics.CreateAPIView):
   'access': str(refresh.access_token),
   'user': response.data
   }) 
-# LOGIN
+
+
 class LoginView(APIView):
   permission_classes = [permissions.AllowAny]
 
@@ -52,7 +48,7 @@ class LoginView(APIView):
       })
     return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
   
-# AUTHENTICATION
+
 class VerifyUserView(APIView):
   permission_classes = [permissions.IsAuthenticated]
   def get(self, request):
@@ -64,12 +60,12 @@ class VerifyUserView(APIView):
       'user': UserSerializer(user).data
     })
   
-# Games Listed
+
 class GameList(generics.ListCreateAPIView):
   queryset = Game.objects.all()
   serializer_class = GameSerializer
 
-# Game Details
+
 class GameDetails(generics.RetrieveUpdateDestroyAPIView):
   queryset = Game.objects.all()
   fields = '__all__'
@@ -84,7 +80,6 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
     instance = self.get_object()
     serializer = self.get_serializer(instance)
 
-    # Get the list of toys not associated with this cat
     word_associated_with_game = Word.objects.filter(id__in=instance.word.all())
     word_serializer = WordSerializer(word_associated_with_game, many=True)
 
@@ -101,7 +96,7 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
     else:
       return Response('You Failed.')  
 
-# view for word
+
 class WordList(generics.ListCreateAPIView):
   queryset = Word.objects.all()
   serializer_class = WordSerializer
@@ -111,7 +106,7 @@ class WordDetail(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = WordSerializer
   lookup_field = 'id'
   
-# The Word and The Game it belongs too
+
 class WordGame(generics.CreateAPIView):
   serializer_class = GameSerializer
   permission_classes = [IsAuthenticated]
@@ -128,14 +123,12 @@ class DrawingList(generics.ListCreateAPIView):
   serializer_class = DrawingSerializer
 
   def post(self, request, *args, **kwargs):
-    game_id = kwargs.get('id')  # Retrieve the game ID from the URL
-    game = Game.objects.get(id=game_id)  # Get the Game object
+    game_id = kwargs.get('id') 
+    game = Game.objects.get(id=game_id)  
 
-    # Add game_id to request data
-    drawing_data = request.data.copy()  # Create a mutable copy of request.data
-    drawing_data['game'] = game.id  # Add the game ID to the drawing data
+    drawing_data = request.data.copy()  
+    drawing_data['game'] = game.id   
 
-    # Pass the modified data to the serializer
     serializer = self.get_serializer(data=drawing_data)
     serializer.is_valid(raise_exception=True)
     self.perform_create(serializer)
