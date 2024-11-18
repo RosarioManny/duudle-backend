@@ -27,10 +27,10 @@ class Game(models.Model):
     )
   
   def __str__(self): 
-    return f"{self.word} | {self.result}"
+    return f"{self.word[0].prompt} | {self.result}"
 
 class Drawing(models.Model):
-  game_id = models.OneToOneField(Game, on_delete=models.CASCADE)
+  game = models.OneToOneField(Game, on_delete=models.CASCADE)
   # game_id = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='drawings')  # Add related_name
   art = models.JSONField()
   # prediction = models.CharField()

@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from .serializers import UserSerializer, GameSerializer, WordSerializer, DrawingSerializer
 from random import random
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 # Authu
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
@@ -62,7 +63,7 @@ class VerifyUserView(APIView):
       'access': str(refresh.access_token),
       'user': UserSerializer(user).data
     })
-
+  
 # Games Listed
 class GameList(generics.ListCreateAPIView):
   queryset = Game.objects.all()
@@ -87,7 +88,7 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
 
     return Response({
       'game': serializer.data,
-      'word_associated_with_game': word_serializer.data    
+      'word_associated_with_game': word_serializer.data  
     })
   
   def update(self, request, *args, **kwargs):
@@ -112,28 +113,20 @@ class WordDetail(generics.RetrieveUpdateDestroyAPIView):
   # fields = '__all__'
   
 # The Word and The Game it belongs too
-class WordGame(generics.RetrieveAPIView):
+class WordGame(generics.CreateAPIView):
   serializer_class = GameSerializer
+  permission_classes = [IsAuthenticated]
 
-  def get_object(self):
+  def perform_create(self, serializer):
+    user = self.request.user
+    
     word_id = self.kwargs['id']
-    word = Word.objects.get(pk=word_id) #<--- word.prompt?
-    game = Game.objects.filter(word=word).first() #<--- Will only pull the first word. Below is code that could randomize the choice. 
-    # max_id = Game.objects.latest('id').id 
-    # random_id = random.randint(1, max_id)
-    # random_object = Game.objects.filter(id=random_id).first()
-    return game
+    word = Word.objects.get(pk=word_id)
+    serializer.save(user=user,word=[word])
 
-class DrawingList(generics.CreateAPIView):
+class DrawingList(generics.ListCreateAPIView):
   queryset = Drawing.objects.all()
   serializer_class = DrawingSerializer
-
-  def get_queryset(self):
-    queryset = self.queryset
-    user_id = self.request.query_params.get('user', None)
-    if user_id is not None:
-      queryset = queryset.filter(user_id=user_id)
-    return queryset
 
 class AddDrawingToGame(APIView):
   serializer_class = DrawingSerializer # <------ may need to add another drawing view
