@@ -34,7 +34,7 @@ class CreateUserView(generics.CreateAPIView):
    'user': response.data
   })
  
- class LoginView(APIView):
+class LoginView(APIView):
   permission_classes = [permissions.AllowAny]
 
   def post(self, request):
@@ -52,10 +52,16 @@ class CreateUserView(generics.CreateAPIView):
   
 class VerifyUserView(APIView):
  permission_classes = [permissions.IsAuthenticated]
-
-  def get(self, request):
-    content = {'message': 'welcome to Whataduudle'}
-    return Response(content)
+ 
+ def get(self, request):
+    user = User.objects.get(username=request.user)
+    refresh = RefreshToken.for_user(request.user)
+    return Response({
+      'refresh': str(refresh),
+      'access': str(refresh.access_token),
+      'user': UserSerializer(user).data
+    })
+ 
 # Game
 class GameDetails(generics.RetrieveUpdateDestroyAPIView):
   queryset = Game.objects.all()
@@ -71,8 +77,7 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
 
     return Response({
       'game': serializer.data,
-      'word_associated_with_game': word_serializer.data
-      
+      'word_associated_with_game': word_serializer.data    
     })
   
   def update(self, request, *args, **kwargs):
@@ -118,4 +123,3 @@ class AddDrawingToGame(APIView):
     drawings = Drawing.objects.get(id=drawing_id)
     game.drawings.add(drawing)
     return Response({'message': f'Drawing {drawings.id} added to Game {game.id}'})
-
