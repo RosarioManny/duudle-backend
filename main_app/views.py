@@ -63,6 +63,10 @@ class VerifyUserView(APIView):
     })
  
 # Game
+class GameListViews(generics.ListCreateAPIView):
+  queryset = Game.objects.all()
+  serializer_class = GameSerializer
+
 class GameDetails(generics.RetrieveUpdateDestroyAPIView):
   queryset = Game.objects.all()
   fields = '__all__'
@@ -89,7 +93,7 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
       Game.result = True
     else:
       return Response('You Failed.')  
- 
+
 # view for word
 class WordList(generics.ListCreateAPIView):
   queryset = Word.objects.all()
@@ -115,6 +119,17 @@ class WordGame(generics.CreateAPIView):
     # random_object = Game.objects.filter(id=random_id).first()
     return game
 
+class DrawingListViews(generics.CreateAPIView):
+  queryset = Drawing.objects.all()
+  serializer_class = DrawingSerializer
+
+  def get_queryset(self):
+    queryset = self.queryset
+    user_id = self.request.query_params.get('user', None)
+    if user_id is not None:
+      queryset = queryset.filter(user_id=user_id)
+    return queryset
+
 class AddDrawingToGame(APIView):
   serializer_class = DrawingSerializer # <------ may need to add another drawing view
 
@@ -123,3 +138,4 @@ class AddDrawingToGame(APIView):
     drawings = Drawing.objects.get(id=drawing_id)
     game.drawings.add(drawing)
     return Response({'message': f'Drawing {drawings.id} added to Game {game.id}'})
+  
