@@ -4,3 +4,4 @@ CREATE USER duudle_admin WITH PASSWORD 'password';
 
 GRANT ALL PRIVILEGES ON DATABASE whataduudle_game TO duudle_admin;
 
+-- Super Admin Username: duudle ; Password: 1234
