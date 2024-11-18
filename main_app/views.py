@@ -19,7 +19,8 @@ class Home(APIView):
  def get(self, request):
   content = {'message': 'welcome to Whataduudle'}
   return Response(content)
- 
+
+# REGISTER
 class CreateUserView(generics.CreateAPIView):
  queryset = User.objects.all()
  serializer_class = UserSerializer
@@ -29,31 +30,30 @@ class CreateUserView(generics.CreateAPIView):
   user = User.objects.get(username=response.data['username'])
   refresh = RefreshToken.for_user(user)
   return Response({
-   'refresh': str(refresh),
-   'access': str(refresh.access_token),
-   'user': response.data
-  })
- 
+  'refresh': str(refresh),
+  'access': str(refresh.access_token),
+  'user': response.data
+  }) 
+# LOGIN
 class LoginView(APIView):
   permission_classes = [permissions.AllowAny]
 
   def post(self, request):
-   username = request.data.get('username')
-   password = request.data.get('password')
-   user = authenticate(username=username, password=password)
-   if user:
-    refresh = RefreshToken.for_user(user)
-    return Response({
-     'refresh': str(refresh),
-     'access': str(refresh.access_token),
-     'user': UserSerializer(user).data
-    })
-   return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-  
+    username = request.data.get('username')
+    password = request.data.get('password')
+    user = authenticate(username=username, password=password)
+    if user:
+      refresh = RefreshToken.for_user(user)
+      return Response({
+      'refresh': str(refresh),
+      'access': str(refresh.access_token),
+      'user': UserSerializer(user).data
+      })
+    return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+# AUTHENTICATION
 class VerifyUserView(APIView):
- permission_classes = [permissions.IsAuthenticated]
- 
- def get(self, request):
+  permission_classes = [permissions.IsAuthenticated]
+  def get(self, request):
     user = User.objects.get(username=request.user)
     refresh = RefreshToken.for_user(request.user)
     return Response({
@@ -61,8 +61,11 @@ class VerifyUserView(APIView):
       'access': str(refresh.access_token),
       'user': UserSerializer(user).data
     })
- 
 # Game
+class GameList(generics.ListCreateAPIView):
+  queryset = Game.objects.all()
+  serializer_class = GameSerializer
+
 class GameDetails(generics.RetrieveUpdateDestroyAPIView):
   queryset = Game.objects.all()
   fields = '__all__'
@@ -89,19 +92,19 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
       Game.result = True
     else:
       return Response('You Failed.')  
- 
+
 # view for word
 class WordList(generics.ListCreateAPIView):
   queryset = Word.objects.all()
   serializer_class = WordSerializer
   
-  
+
 class WordDetail(generics.RetrieveUpdateDestroyAPIView):
   queryset = Word.objects.all()
   serializer_class = WordSerializer
   lookup_field = 'id'
   
-  
+# The Word and The Game it belongs too
 class WordGame(generics.CreateAPIView):
   serializer_class = GameSerializer
 
@@ -121,5 +124,7 @@ class AddDrawingToGame(APIView):
   def post(self, request, game_id, drawing_id):
     game = Game.objects.get(id=game_id)
     drawings = Drawing.objects.get(id=drawing_id)
-    game.drawings.add(drawing)
+    # game.drawings.add(drawing)
     return Response({'message': f'Drawing {drawings.id} added to Game {game.id}'})
+
+
