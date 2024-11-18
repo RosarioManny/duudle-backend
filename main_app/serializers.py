@@ -30,8 +30,7 @@ class GameSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Game
-    field = '__all__'
-    
+    fields = '__all__'
         
 class DrawingSerializer(serializers.ModelSerializer):
     class Meta:
