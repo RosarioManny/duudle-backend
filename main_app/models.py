@@ -31,7 +31,7 @@ class Game(models.Model):
 
 class Drawing(models.Model):
   game = models.OneToOneField(Game, on_delete=models.CASCADE)
-  art = models.JSONField()
+  art = models.TextField()
 
   def __str__(self):
     return f"Drawing with id: {str(self.id)}"
