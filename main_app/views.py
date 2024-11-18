@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Game, Word, Drawing
 from django.contrib.auth.models import User
-from .serializers import UserSerializer, GameSerializer, WordSerializer
+from .serializers import UserSerializer, GameSerializer, WordSerializer, DrawingSerializer
 from random import random
 from rest_framework.response import Response
 # Authu
@@ -113,3 +113,13 @@ class VerifyUserView(APIView):
       'access': str(refresh.access_token),
       'user': UserSerializer(user).data
     })
+
+
+class AddDrawingToGame(APIView):
+  serializer_class = DrawingSerializer # <------ may need to add another drawing view
+
+  def post(self, request, game_id, drawing_id):
+    game = Game.objects.get(id=game_id)
+    drawings = Drawing.objects.get(id=drawing_id)
+    game.drawings.add(drawing)
+    return Response({'message': f'Drawing {drawings.id} added to Game {game.id}'})
