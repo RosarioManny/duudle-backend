@@ -18,7 +18,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     return user 
 
-# Word serializer
 class WordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Word
