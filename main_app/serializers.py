@@ -18,17 +18,20 @@ class UserSerializer(serializers.ModelSerializer):
 
     return user 
 
-class GameSerializer(serializers.ModelSerializer):
-  user = serializers.PrimaryKeyRelatedField(read_only=True)
-  class Meta:
-    model = Game
-    field = '__all__'
-    
 # Word serializer
 class WordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Word
         fields = '__all__'
+
+class GameSerializer(serializers.ModelSerializer):
+  user = serializers.PrimaryKeyRelatedField(read_only=True)
+  word = WordSerializer(many=True, read_only=True)
+
+  class Meta:
+    model = Game
+    field = '__all__'
+    
         
 class DrawingSerializer(serializers.ModelSerializer):
     class Meta:
