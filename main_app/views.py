@@ -16,9 +16,9 @@ from django.contrib.auth import authenticate
 # Create your views here.g
 class Home(APIView):
 
- def get(self, request):
-  content = {'message': 'welcome to Whataduudle'}
-  return Response(content)
+  def get(self, request):
+    content = {'message': 'welcome to Whataduudle'}
+    return Response(content)
 
 # REGISTER
 class CreateUserView(generics.CreateAPIView):
@@ -50,6 +50,7 @@ class LoginView(APIView):
       'user': UserSerializer(user).data
       })
     return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+  
 # AUTHENTICATION
 class VerifyUserView(APIView):
   permission_classes = [permissions.IsAuthenticated]
@@ -61,14 +62,20 @@ class VerifyUserView(APIView):
       'access': str(refresh.access_token),
       'user': UserSerializer(user).data
     })
-# Game
-class GameListViews(generics.ListCreateAPIView):
+
+# Games Listed
+class GameList(generics.ListCreateAPIView):
   queryset = Game.objects.all()
   serializer_class = GameSerializer
 
+# Game Details
 class GameDetails(generics.RetrieveUpdateDestroyAPIView):
   queryset = Game.objects.all()
   fields = '__all__'
+
+  def get_queryset(self):
+    user = self.request.user
+    return Game.objects.filter(user=user)
 
   def retrieve(self, request, *args, **kwargs):
     instance = self.get_object()
@@ -102,13 +109,14 @@ class WordDetail(generics.RetrieveUpdateDestroyAPIView):
   queryset = Word.objects.all()
   serializer_class = WordSerializer
   lookup_field = 'id'
+  # fields = '__all__'
   
 # The Word and The Game it belongs too
-class WordGame(generics.CreateAPIView):
+class WordGame(generics.RetrieveAPIView):
   serializer_class = GameSerializer
 
   def get_object(self):
-    word_id = self.kwargs['word_id']
+    word_id = self.kwargs['id']
     word = Word.objects.get(pk=word_id) #<--- word.prompt?
     game = Game.objects.filter(word=word).first() #<--- Will only pull the first word. Below is code that could randomize the choice. 
     # max_id = Game.objects.latest('id').id 
