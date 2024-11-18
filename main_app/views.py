@@ -47,3 +47,12 @@ class CreateUserView(generics.CreateAPIView):
   
 class VerifyUserView(APIView):
  permission_classes = [permissions.IsAuthenticated]
+
+ def get(self, request):
+  user = User.objectsgrt(username=request.user)
+  refresh = RefreshToken.for_user(request.user)
+  return Response({
+   'refresh': str(refresh),
+   'access': str(refresh.access_token),
+   'user': UserSerializer(user).data
+  })
