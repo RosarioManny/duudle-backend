@@ -73,6 +73,8 @@ class GameList(generics.ListCreateAPIView):
 class GameDetails(generics.RetrieveUpdateDestroyAPIView):
   queryset = Game.objects.all()
   fields = '__all__'
+  lookup_field = 'id'
+  serializer_class = GameSerializer
 
   def get_queryset(self):
     user = self.request.user
@@ -83,7 +85,7 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer = self.get_serializer(instance)
 
     # Get the list of toys not associated with this cat
-    word_associated_with_game = Word.objects.include(id__in=instance.word.all())
+    word_associated_with_game = Word.objects.filter(id__in=instance.word.all())
     word_serializer = WordSerializer(word_associated_with_game, many=True)
 
     return Response({
@@ -94,9 +96,7 @@ class GameDetails(generics.RetrieveUpdateDestroyAPIView):
   def update(self, request, *args, **kwargs):
     instance = self.get_object()
     serializer = self.get_serializer(instance)
-    is_result = self.get_object()
-    # game.result
-    if Drawing.prediction == 'PASS':
+    if instance.result == 'PASS':
       Game.result = True
     else:
       return Response('You Failed.')  
@@ -110,7 +110,6 @@ class WordDetail(generics.RetrieveUpdateDestroyAPIView):
   queryset = Word.objects.all()
   serializer_class = WordSerializer
   lookup_field = 'id'
-  # fields = '__all__'
   
 # The Word and The Game it belongs too
 class WordGame(generics.CreateAPIView):
@@ -128,11 +127,17 @@ class DrawingList(generics.ListCreateAPIView):
   queryset = Drawing.objects.all()
   serializer_class = DrawingSerializer
 
-class AddDrawingToGame(APIView):
-  serializer_class = DrawingSerializer # <------ may need to add another drawing view
+  def post(self, request, *args, **kwargs):
+    game_id = kwargs.get('id')  # Retrieve the game ID from the URL
+    game = Game.objects.get(id=game_id)  # Get the Game object
 
-  def post(self, request, game_id, drawing_id):
-    game = Game.objects.get(id=game_id)
-    drawings = Drawing.objects.get(id=drawing_id)
-    # game.drawings.add(drawing)
-    return Response({'message': f'Drawing {drawings.id} added to Game {game.id}'})
+    # Add game_id to request data
+    drawing_data = request.data.copy()  # Create a mutable copy of request.data
+    drawing_data['game'] = game.id  # Add the game ID to the drawing data
+
+    # Pass the modified data to the serializer
+    serializer = self.get_serializer(data=drawing_data)
+    serializer.is_valid(raise_exception=True)
+    self.perform_create(serializer)
+
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
