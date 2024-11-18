@@ -15,7 +15,6 @@ class Word(models.Model):
 class Game(models.Model):
   result = models.BooleanField(default=False) # <--- False
   word = models.ManyToManyField(Word) #<--- Later Pass in Word Model
-  user = models.OneToOneField(User) # <---- Later pass in User
   drawing= models.CharField() # <------- Drawing model ?
   user = models.OneToOneField(User, on_delete=models.CASCADE) # <---- Later pass in User
   created_at = models.DateTimeField(auto_now_add=True) # <--- Auto Adds a Timestapmp of When game was created. 
@@ -26,5 +25,6 @@ class Game(models.Model):
 
 class Drawing(models.Model):
   game_id = models.OneToOneField(Game, on_delete=models.CASCADE)
+  # game_id = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='drawings')  # Add related_name
   art = models.JSONField()
   # prediction = models.CharField()
