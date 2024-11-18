@@ -15,7 +15,7 @@ class Word(models.Model):
 class Game(models.Model):
   result = models.BooleanField(default=False) # <--- False
   word = models.ManyToManyField(Word) #<--- Later Pass in Word Model
-  drawing= models.CharField() # <------- Drawing model ?
+  sketch = models.CharField() # <------- Drawing model ?
   user = models.OneToOneField(User, on_delete=models.CASCADE) # <---- Later pass in User
   created_at = models.DateTimeField(auto_now_add=True) # <--- Auto Adds a Timestapmp of When game was created. 
   difficulty = models.CharField(
