@@ -124,7 +124,7 @@ class WordGame(generics.RetrieveAPIView):
     # random_object = Game.objects.filter(id=random_id).first()
     return game
 
-class DrawingListViews(generics.CreateAPIView):
+class DrawingList(generics.CreateAPIView):
   queryset = Drawing.objects.all()
   serializer_class = DrawingSerializer
 
