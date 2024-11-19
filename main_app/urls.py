@@ -14,3 +14,7 @@ urlpatterns = [
   path('words/<int:id>/games/', WordGame.as_view(), name='Word-Game'), 
   path('games/<int:id>/drawings/', DrawingList.as_view(), name='drawing-list'), 
 ]
+
+# update the drawing to clear
+# 
+

@@ -176,3 +176,34 @@ class DrawingList(generics.ListCreateAPIView):
     self.perform_create(serializer)
 
     return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
+# class ClearDrawings(APIView):
+#     def delete(self, request, *args, **kwargs):
+#         game_id = kwargs.get('id')  # Get game ID from URL
+#         try:
+#             # Delete all drawings associated with the given game
+#             drawings_deleted, _ = Drawing.objects.filter(game_id=game_id).delete()
+#             return Response(
+#                 {"message": f"Successfully cleared {drawings_deleted} drawings for game {game_id}."},
+#                 status=status.HTTP_200_OK,
+#             )
+#         except Game.DoesNotExist:
+#             return Response(
+#                 {"error": "Game not found."},
+#                 status=status.HTTP_404_NOT_FOUND,
+#             )
+            
+            
+            
+# from django.urls import path
+# from .views import DrawingList, ClearDrawings
+
+# urlpatterns = [
+#     path('games/<int:id>/drawings/', DrawingList.as_view(), name='drawing-list'),
+#     path('games/<int:id>/drawings/clear/', ClearDrawings.as_view(), name='clear-drawings'),
+# ]
+
+
+# DELETE /games/1/drawings/clear/
