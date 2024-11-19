@@ -61,8 +61,14 @@ class VerifyUserView(APIView):
     })
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  GAME VIEWS  vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 class GameList(generics.ListCreateAPIView):
-  queryset = Game.objects.all()
   serializer_class = GameSerializer
+  permission_classes = [permissions.IsAuthenticated]
+
+  def get_queryset(self):
+    # This ensures we only return Games belonging to the logged-in user
+    user = self.request.user
+    return Game.objects.filter(user=user)
+
 
 # Gets the Game details | games/<int:id>/
 class GameDetails(generics.RetrieveUpdateDestroyAPIView):
