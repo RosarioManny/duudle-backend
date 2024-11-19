@@ -15,3 +15,4 @@ urlpatterns = [
   path('games/<int:id>/drawings/', DrawingList.as_view(), name='drawing-list'), 
   path('games/<int:game_id>/drawings/<int:id>/', DrawingDetails.as_view(), name='DrawingDetails'),
 ]
+
