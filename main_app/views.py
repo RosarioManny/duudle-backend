@@ -1,13 +1,13 @@
-from rest_framework import generics, status, permissions
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.exceptions import PermissionDenied
+from .serializers import UserSerializer, GameSerializer, WordSerializer, DrawingSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import generics, status, permissions
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from rest_framework.views import APIView
 from .models import Game, Word, Drawing
-from .serializers import UserSerializer, GameSerializer, WordSerializer, DrawingSerializer
 
 
 class Home(APIView):
@@ -135,7 +135,8 @@ class WordGame(generics.CreateAPIView):
     
     word_id = self.kwargs['id']
     word = Word.objects.get(pk=word_id)
-    serializer.save(user=user,word=[word])
+    game_difficulty = word.difficulty
+    serializer.save(user=user,word=[word], difficulty=game_difficulty)
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  DRAWING VIEWS  vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 # List out all the Drawings | games/<int:id>/drawings/
 class DrawingList(generics.ListCreateAPIView):
@@ -153,13 +154,12 @@ class DrawingList(generics.ListCreateAPIView):
     # Create the drawing data and automatically set the game field
     drawing_data = request.data.copy()  
     drawing_data['game'] = game.id   # Automatically set the game from the URL
-
+    
     # Serialize and validate the data
     serializer = self.get_serializer(data=drawing_data)
     serializer.is_valid(raise_exception=True)
     self.perform_create(serializer)
 
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
 # Retreive, Update and Delete Drawings | 'games/<int:game_id>/drawings/<int:id>/'
 class DrawingDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Drawing.objects.all()

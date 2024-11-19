@@ -12,6 +12,6 @@ urlpatterns = [
   path('words/', WordList.as_view(), name='word-list'), 
   path('words/<int:id>/', WordDetail.as_view(), name='word-list'),
   path('words/<int:id>/games/', WordGame.as_view(), name='Word-Game'), 
-  path('games/drawings', DrawingList.as_view(), name='drawing-list'), 
+  path('games/drawings/', DrawingList.as_view(), name='drawing-list'), 
   path('games/drawings/<int:id>/', DrawingDetails.as_view(), name='DrawingDetails'),
 ]
