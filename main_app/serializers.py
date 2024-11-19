@@ -31,7 +31,17 @@ class DrawingSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
   user = serializers.PrimaryKeyRelatedField(read_only=True)
   word = WordSerializer(many=True, read_only=True)
+  difficulty = serializers.CharField(read_only=True)  # Make difficulty read-only
 
   class Meta:
     model = Game
     fields = '__all__'
+
+  def create(self, validated_data):
+        # Set difficulty based on the word
+    word_list = validated_data.get('word', [])
+    if word_list:
+            # Set the game's difficulty based on the first word's difficulty
+      validated_data['difficulty'] = word_list[0].difficulty  # Get the first word's difficulty
+        
+    return super().create(validated_data)
