@@ -143,18 +143,23 @@ class DrawingList(generics.ListCreateAPIView):
   serializer_class = DrawingSerializer
 
   def post(self, request, *args, **kwargs):
+    # Get the game_id from the URL
     game_id = kwargs.get('id') 
-    game = Game.objects.get(id=game_id)  
-
+    try:
+        # Fetch the Game object based on game_id
+        game = Game.objects.get(id=game_id)
+    except Game.DoesNotExist:
+        return Response({"error": "Game not found."}, status=status.HTTP_404_NOT_FOUND)
+    # Create the drawing data and automatically set the game field
     drawing_data = request.data.copy()  
-    drawing_data['game'] = game.id   
+    drawing_data['game'] = game.id   # Automatically set the game from the URL
 
+    # Serialize and validate the data
     serializer = self.get_serializer(data=drawing_data)
     serializer.is_valid(raise_exception=True)
     self.perform_create(serializer)
 
     return Response(serializer.data, status=status.HTTP_201_CREATED)
-  
 # Retreive, Update and Delete Drawings | 'games/<int:game_id>/drawings/<int:id>/'
 class DrawingDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Drawing.objects.all()
