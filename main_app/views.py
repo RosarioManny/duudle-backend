@@ -154,7 +154,6 @@ class DrawingList(generics.ListCreateAPIView):
     self.perform_create(serializer)
 
     return Response(serializer.data, status=status.HTTP_201_CREATED)
-  
 # Retreive, Update and Delete Drawings | 'games/<int:game_id>/drawings/<int:id>/'
 class DrawingDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Drawing.objects.all()
