@@ -51,10 +51,18 @@
 1. Clone the repo
 1. Run command
    `pipenv shell`
-   and install all the dependences
+   and install the dependences...
    `pipenv install`
-1. Create the Databases using this command
+1. Create the Databases using this command. Make sure to uncomment the lines shown...
    `psql -f create-database.sql`
+   Image of CREATE DATABASE
+1. Once Created run these commands to make migrations for the models.
+   `python manage.py makemigrations`
+   `python manage.py migrate`
+   1. To see if migrations were succussful use the command...
+      `python manage.py showmigrationss `
+1. Run the server
+   `python manage.py runserver`
 
 #### ERD
 
