@@ -1,8 +1,12 @@
-# **_WhatADuudle_**
+# **_Whataduudle_**
 
-**Project Created By:**
+## Project Created By
 
-**_Mandy DeCamp, Norman Lee, Tim Lim, Nyunt Sein and Emmanuel Rosario_**
+- Mandy DeCamp
+- Norman Lee
+- Tim Lim
+- Emmanuel Rosario
+- NyuntSein
 
 ## **Technologies**
 
