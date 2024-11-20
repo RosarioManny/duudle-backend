@@ -29,6 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DATABASE_URL=env('DATABASE_URL')
 SECRET_KEY=env('SECRET_KEY')
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
