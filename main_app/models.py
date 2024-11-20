@@ -18,7 +18,7 @@ class Word(models.Model):
 class Game(models.Model):
   result = models.BooleanField(default=False) 
   word = models.ManyToManyField(Word) 
-  user = models.OneToOneField(User, on_delete=models.CASCADE)  
+  user = models.ForeignKey(User, on_delete=models.CASCADE)  
   created_at = models.DateTimeField(auto_now_add=True) 
   difficulty = models.CharField(
     choices=DIFFICULTY_CHOICES, 
