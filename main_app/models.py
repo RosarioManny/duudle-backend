@@ -34,4 +34,4 @@ class Drawing(models.Model):
   art = models.TextField()
 
   def __str__(self):
-    return f"Drawing with id: {str(self.id)}"
+    return f"Drawing id: {str(self.id)} | Game id: {str(self.game)} "
