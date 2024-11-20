@@ -42,32 +42,24 @@
 
 #### WireFrame
 
-[Whataduudle WireFrame](README.Images/WireFrame.jpg, "Whataduudle WireFrame")
+![alt text](./README.Images/image-3.png)
+![alt text](./README.Images/image-2.png)
+![alt text](./README.Images/image-4.png)
+![alt text](./README.Images/image-6.png)
+![alt text](./README.Images/image-7.png)
+![alt text](./README.Images/image-8.png)
+
+#### REACT Components
+
+![alt text](./README.Images/image-9.png)
 
 ### BACK-END
 
-#### Set-Up
-
-1. Clone the repo
-1. Run command
-   `pipenv shell`
-   and install the dependences...
-   `pipenv install`
-1. Create the Databases using this command. Make sure to uncomment the lines shown...
-   `psql -f create-database.sql`
-   Image of CREATE DATABASE
-1. Once Created run these commands to make migrations for the models.
-   `python manage.py makemigrations`
-   `python manage.py migrate`
-   1. To see if migrations were succussful use the command...
-      `python manage.py showmigrationss `
-1. Run the server
-   `python manage.py runserver`
-
 #### ERD
 
-[MVP ERD](README.Images/ERD.MVP.jpeg "MVP ERD")
+![alt text](./README.Images/image.png)
 
+![alt text](./README.Images/image-1.png)
 **User**
 
 - **Id:** The identification number of a user. This is an auto-created field.
@@ -96,6 +88,8 @@
 - **drawing:** The drawing that the user will draw. This will be store as JSON, to save space.
 
 ### Routes
+
+![alt text](image-11.png)
 
 # API Endpoints Documentation
 
