@@ -38,16 +38,24 @@
 
 ## USER STORIES
 
-### FRONT-END
+1. As a User (AAU), I want to be able to sign up for an account if I choose to.
+2. AAU, I want to be able to sign in and sign out.
+3. AAU, I want to be able to see a landing page.
+4. AAU, when the game is won or lost, I want to be able to replay.
+5. AAU, I want to be able to draw my prompt.
+6. AAU, I want to be able to clear my drawing.
+7. AAU, I want to see the prompt and word while I am drawing.
+8. AAU, I want to see the timer, how much time I have left, and the prompt while I am drawing.
+9. AAU, I want a fast and exciting round lasting 20–40 seconds.
 
 #### WireFrame
 
-![alt text](./README.Images/README-whataduudle!.png)
-![alt text](./README.Images/README-homepage.png)
-![alt text](./README.Images/README-game-start.png)
-![alt text](./README.Images/README-draw.png)
-![alt text](./README.Images/README-signin-register.png)
-![alt text](./README.Images/README-prompt-win-lose.png)
+![alt text](/README.Images/README-whataduudle!.png)
+![alt text](/README.Images/README-homepage.png)
+![alt text](/README.Images/README-game-start.png)
+![alt text](/README.Images/README-draw.png)
+![alt text](/README.Images/README-signin-register.png)
+![alt text](/README.Images/README-prompt-win-lose.png)
 
 #### REACT Components
 
@@ -89,7 +97,7 @@
 
 ### Routes
 
-![alt text](./README.Images/README-Routes.png)
+![alt text](/README.Images/README-Routes.png)
 
 # API Endpoints Documentation
 
@@ -228,22 +236,30 @@
 
 ## WordList(generics.ListCreateAPIView)
 
-- **Purpose:** (POST) ???
+- **Purpose:** (GET)/(POST) The list of all words and create a word.
 
 ## WordDetail(generics.RetrieveUpdateDestroyAPIView)
 
-- **Purpose:** (GET)/(POST)/(DELETE) ???
+- **Purpose:** (GET)/(POST)/(DELETE) Get a single word and its details.
 
 ## WordGame(generics.CreateAPIView)
 
-- **Purpose:** (POST) ???
+- **Purpose:** (POST) Creates game for user with the retrieved word.
 
 ## DrawingList(generics.ListCreateAPIView)
 
-- **Purpose** (POST) ???
+- **Purpose** (GET)/(POST) The list of words.
 
-## ClearDrawings(APIView)
+## DrawingDetails(generics.RetrieveUpdateDestroyAPIView)
 
-- **Purpose** (DELETE) ???
+- **Purpose** (GET)/(PUT)/(DELETE) Get a single word.
 
-## DESIGNS
+### Post-MVP
+
+1. AAU, I want a different color to draw with.
+2. AAU, I want an eraser button.
+3. AAU, I want a difficulty option.
+4. AAU, I want an undo button.
+5. AAU, I want a high-score leaderboard.
+6. AAU, I want multiple modes.
+7. AAU, I want both a redo and an undo button.
