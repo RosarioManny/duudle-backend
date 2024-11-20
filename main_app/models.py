@@ -18,7 +18,7 @@ class Word(models.Model):
 class Game(models.Model):
   result = models.BooleanField(default=False) 
   word = models.ManyToManyField(Word) 
-  user = models.ForeignKey(User, on_delete=models.CASCADE, unique=False)  
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
   created_at = models.DateTimeField(auto_now_add=True) 
   difficulty = models.CharField(
     choices=DIFFICULTY_CHOICES, 
@@ -34,4 +34,4 @@ class Drawing(models.Model):
   art = models.TextField()
 
   def __str__(self):
-    return f"Drawing with id: {str(self.id)}"
+    return f"Drawing id: {str(self.id)} | Game id: {str(self.game)} "

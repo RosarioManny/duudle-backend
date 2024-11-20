@@ -46,6 +46,16 @@
 
 ### BACK-END
 
+#### Set-Up
+
+1. Clone the repo
+1. Run command
+   `pipenv shell`
+   and install all the dependences
+   `pipenv install`
+1. Create the Databases using this command
+   `psql -f create-database.sql`
+
 #### ERD
 
 [MVP ERD](README.Images/ERD.MVP.jpeg "MVP ERD")
@@ -79,8 +89,157 @@
 
 ### Routes
 
+# API Endpoints Documentation
+
+## User Endpoints
+
+### User Sign-Up
+
+- **Endpoint:** `/users/register/`
+- **Method:** `POST`
+- **Description:** Creates a new user account.
+
+### User Login
+
+- **Endpoint:** `/users/login/`
+- **Method:** `POST`
+- **Description:** Authenticates a user and returns a token.
+
+---
+
+## Game Endpoints
+
+### List of Games
+
+- **Endpoint:** `/games/`
+- **Method:** `GET`
+- **Description:** Retrieves a list of all games.
+
+### Individual Game
+
+- **Endpoint:** `/games/<game_id>/`
+- **Method:** `GET`
+- **Description:** Retrieves details of a specific game.
+
+---
+
+## Word Endpoints
+
+### List of Words
+
+- **Endpoint:** `/words/`
+- **Method:** `GET`
+- **Description:** Retrieves a list of all words.
+
+### Individual Word
+
+- **Endpoint:** `/words/<word_id>/`
+- **Method:** `GET`
+- **Description:** Retrieves details of a specific word.
+
+### Start a Game
+
+- **Endpoint:** `/words/<word_id>/games/`
+- **Method:** `POST`
+- **Description:** Starts a new game with the specified word.
+
+---
+
+## Drawing Endpoints
+
+### List of Drawings for a Game
+
+- **Endpoint:** `/games/<game_id>/drawings/`
+- **Method:** `GET`
+- **Description:** Retrieves a list of drawings for a specific game.
+
+### Add Drawing to a Game
+
+- **Endpoint:** `/games/<game_id>/drawings/`
+- **Method:** `POST`
+- **Description:** Adds a new drawing to a specific game.
+
+---
+
+## Game Update Endpoints
+
+### Player Passed
+
+- **Endpoint:** `/games/<game_id>/`
+- **Method:** `PATCH`
+- **Description:** Updates the game state to indicate a player has passed.
+
+### Update Game State
+
+- **Endpoint:** `/games/<game_id>/`
+- **Method:** `PATCH`
+- **Description:** Updates the game state with a new word, difficulty, and winner information.
+
 ### Models
 
+## Word
+
+- **Prompt (CharField):**
+- **Difficulty (CharField):**
+- **Category (ForeignKey):**
+
+## Game
+
+- **Result (BooleanField):**
+- **word (ManytoManyField):**
+- **user (OneToOneField):**
+- **created_at (DateTimeField):**
+- **difficulty (CharField):**
+
+## Drawing
+
+- **game (OneToOneField):**
+- **art (TextFirld):**
+
 ### Views
+
+## Home(APIView)
+
+- **Purpose:** Show home page..
+
+## CreateUserView(generics.CreateAPIView)
+
+- **Purpose:** ????
+
+## LoginView(APIView)
+
+- **Purpose:** User login page..
+
+## VerifyUserView(APIView)
+
+- **Purpose:** Check an authentication for user..
+
+## GameDetails(generics.RetrieveUpdateDestroyAPIView)
+
+- **Purpose:** Create a game.(POST)
+
+## GameDetails(generics.RetrieveUpdateDestroy)
+
+- **Purpose:** (GET)/(POST)/(DELETE) for game.
+
+## WordList(generics.ListCreateAPIView)
+
+- **Purpose:** (POST) ???
+
+## WordDetail(generics.RetrieveUpdateDestroyAPIView)
+
+- **Purpose:** (GET)/(POST)/(DELETE) ???
+
+## WordGame(generics.CreateAPIView)
+
+- **Purpose:** (POST) ???
+
+## DrawingList(generics.ListCreateAPIView)
+
+- **Purpose** (POST) ???
+
+## ClearDrawings(APIView)
+
+- **Purpose** (DELETE) ???
 
 ## DESIGNS

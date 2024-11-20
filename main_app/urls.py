@@ -1,5 +1,5 @@
-from django.urls import path
 from .views import Home, CreateUserView, LoginView, VerifyUserView, GameDetails, WordList, WordDetail, WordGame, GameList, DrawingList, DrawingDetails
+from django.urls import path
 
 
 urlpatterns = [
