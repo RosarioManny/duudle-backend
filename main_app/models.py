@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Word Model
+
 DIFFICULTY_CHOICES = (
   ('EASY', 'Easy'),
   ('MEDIUM', 'Medium'),
@@ -16,10 +16,10 @@ class Word(models.Model):
     return self.prompt
 
 class Game(models.Model):
-  result = models.BooleanField(default=False) # <--- False
-  word = models.ManyToManyField(Word) #<--- Later Pass in Word Model
-  user = models.OneToOneField(User, on_delete=models.CASCADE) # <---- Later pass in User
-  created_at = models.DateTimeField(auto_now_add=True) # <--- Auto Adds a Timestapmp of When game was created. 
+  result = models.BooleanField(default=False) 
+  word = models.ManyToManyField(Word) 
+  user = models.ForeignKey(User, on_delete=models.CASCADE)  
+  created_at = models.DateTimeField(auto_now_add=True) 
   difficulty = models.CharField(
     choices=DIFFICULTY_CHOICES, 
     default=DIFFICULTY_CHOICES[0][0]
@@ -31,7 +31,7 @@ class Game(models.Model):
 
 class Drawing(models.Model):
   game = models.OneToOneField(Game, on_delete=models.CASCADE)
-  art = models.JSONField()
+  art = models.TextField()
 
   def __str__(self):
     return f"Drawing with id: {str(self.id)}"
