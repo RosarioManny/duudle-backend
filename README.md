@@ -51,7 +51,7 @@
 
 #### REACT Components
 
-![alt text](./README.Images/README-REACT-Components.png)
+![alt text](/README.Images/README-REACT-Components.png)
 
 ### BACK-END
 
@@ -199,6 +199,8 @@
 - **art (TextFirld):**
 
 ### Views
+
+![alt text](image.png)
 
 ## Home(APIView)
 
