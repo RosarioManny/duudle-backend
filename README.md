@@ -42,24 +42,24 @@
 
 #### WireFrame
 
-![alt text](./README.Images/image-3.png)
-![alt text](./README.Images/image-2.png)
-![alt text](./README.Images/image-4.png)
-![alt text](./README.Images/image-6.png)
-![alt text](./README.Images/image-7.png)
-![alt text](./README.Images/image-8.png)
+![alt text](./README.Images/README-whataduudle!.png)
+![alt text](./README.Images/README-homepage.png)
+![alt text](./README.Images/README-game-start.png)
+![alt text](./README.Images/README-draw.png)
+![alt text](./README.Images/README-signin-register.png)
+![alt text](./README.Images/README-prompt-win-lose.png)
 
 #### REACT Components
 
-![alt text](./README.Images/image-9.png)
+![alt text](/README.Images/README-REACT-Components.png)
 
 ### BACK-END
 
 #### ERD
 
-![alt text](./README.Images/image.png)
+![alt text](./README.Images/README-MVP.png)
 
-![alt text](./README.Images/image-1.png)
+![alt text](./README.Images/README-POST-MVP.png)
 **User**
 
 - **Id:** The identification number of a user. This is an auto-created field.
@@ -89,7 +89,7 @@
 
 ### Routes
 
-![alt text](image-11.png)
+![alt text](./README.Images/README-Routes.png)
 
 # API Endpoints Documentation
 
@@ -199,6 +199,8 @@
 - **art (TextFirld):**
 
 ### Views
+
+![alt text](image.png)
 
 ## Home(APIView)
 
