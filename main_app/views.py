@@ -1,13 +1,14 @@
-from rest_framework import generics, status, permissions
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.exceptions import PermissionDenied
+from .serializers import UserSerializer, GameSerializer, WordSerializer, DrawingSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import generics, status, permissions
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import authenticate, logout
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from rest_framework.views import APIView
 from .models import Game, Word, Drawing
-from .serializers import UserSerializer, GameSerializer, WordSerializer, DrawingSerializer
 
 
 class Home(APIView):
@@ -48,6 +49,27 @@ class LoginView(APIView):
       })
     return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
   
+class LogoutView(APIView):
+    def post(self, request):
+        if request.user.is_authenticated:
+            # Clean up user's unfinished games
+            Game.objects.filter(
+                user=request.user,
+                result=False
+            ).delete()
+            
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
+    def post(self, request):
+        if request.user.is_authenticated:
+            # Clean up user's unfinished games
+            Game.objects.filter(
+                user=request.user,
+                result=False
+            ).delete()
+            
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
 
 class VerifyUserView(APIView):
   permission_classes = [permissions.IsAuthenticated]
@@ -61,8 +83,14 @@ class VerifyUserView(APIView):
     })
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  GAME VIEWS  vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 class GameList(generics.ListCreateAPIView):
-  queryset = Game.objects.all()
   serializer_class = GameSerializer
+  permission_classes = [permissions.IsAuthenticated]
+
+  def get_queryset(self):
+    # This ensures we only return Games belonging to the logged-in user
+    user = self.request.user
+    return Game.objects.filter(user=user)
+
 
 # Gets the Game details | games/<int:id>/
 class GameDetails(generics.RetrieveUpdateDestroyAPIView):
@@ -135,7 +163,8 @@ class WordGame(generics.CreateAPIView):
     
     word_id = self.kwargs['id']
     word = Word.objects.get(pk=word_id)
-    serializer.save(user=user,word=[word])
+    game_difficulty = word.difficulty
+    serializer.save(user=user,word=[word], difficulty=game_difficulty)
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv  DRAWING VIEWS  vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 # List out all the Drawings | games/<int:id>/drawings/
 class DrawingList(generics.ListCreateAPIView):
@@ -143,12 +172,18 @@ class DrawingList(generics.ListCreateAPIView):
   serializer_class = DrawingSerializer
 
   def post(self, request, *args, **kwargs):
+    # Get the game_id from the URL
     game_id = kwargs.get('id') 
-    game = Game.objects.get(id=game_id)  
-
+    try:
+        # Fetch the Game object based on game_id
+        game = Game.objects.get(id=game_id)
+    except Game.DoesNotExist:
+        return Response({"error": "Game not found."}, status=status.HTTP_404_NOT_FOUND)
+    # Create the drawing data and automatically set the game field
     drawing_data = request.data.copy()  
-    drawing_data['game'] = game.id   
-
+    drawing_data['game'] = game.id   # Automatically set the game from the URL
+    
+    # Serialize and validate the data
     serializer = self.get_serializer(data=drawing_data)
     serializer.is_valid(raise_exception=True)
     self.perform_create(serializer)
