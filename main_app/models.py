@@ -1,7 +1,7 @@
-from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver 
+from django.db import models
 
 
 DIFFICULTY_CHOICES = (
@@ -20,11 +20,11 @@ class Word(models.Model):
 class Game(models.Model):
   result = models.BooleanField(default=False) 
   word = models.ManyToManyField(Word) 
-  user = models.ForeignKey(User, on_delete=models.CASCADE)  
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
   created_at = models.DateTimeField(auto_now_add=True) 
   difficulty = models.CharField(
     choices=DIFFICULTY_CHOICES, 
-    default=DIFFICULTY_CHOICES[0][0]
+    # default=DIFFICULTY_CHOICES[0][0]
     )
   
   def __str__(self): 
