@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from django.http import JsonResponse
 from dotenv import load_dotenv
 from io import BytesIO
-# from PIL import Image
+from PIL import Image
 import requests
 import base64
 import os

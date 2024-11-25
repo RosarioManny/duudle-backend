@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-import environ
+import environ  
 import dj_database_url
 import django_heroku
 
@@ -33,37 +33,37 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com', 'whataduudle.netlify.app']
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173", 
-#     "http://127.0.0.1:5173",  
-#     "http://localhost:3000",  
-#     "https://whataduudle.netlify.app",
-#     # "insert netlify url here",  # chage this to your netlify app url
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173", 
+    "http://127.0.0.1:5173",  
+    "http://localhost:3000",  
+    "https://whataduudle.netlify.app",
+    # "insert netlify url here",  # chage this to your netlify app url
+]
 
-# CORS_ALLOW_ALL_ORIGINS = False
-# CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_CREDENTIALS = True
 
-# CORS_ALLOW_METHODS = [
-#     'DELETE',
-#     'GET',
-#     'OPTIONS',
-#     'PATCH',
-#     'POST',
-#     'PUT',
-# ]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
-# CORS_ALLOW_HEADERS = [
-#     'accept',
-#     'accept-encoding',
-#     'authorization',
-#     'content-type',
-#     'dnt',
-#     'origin',
-#     'user-agent',
-#     'x-csrftoken',
-#     'x-requested-with',
-# ]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 # SESSION CONFIG
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
@@ -83,14 +83,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'main_app',
-    # 'corsheaders',
-    # 'PIL',
+    'corsheaders',
+    'PIL',
     'dotenv',
     'requests',
 ]
 
 MIDDLEWARE = [
-    # 'corsheaders.middleware.CorsMiddleware', 
+    'corsheaders.middleware.CorsMiddleware', 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
