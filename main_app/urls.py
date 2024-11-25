@@ -1,7 +1,6 @@
 from django.urls import path
 from .views import Home, CreateUserView, LoginView, LogoutView, VerifyUserView, GameDetails, WordList, WordDetail, WordGame, GameList, DrawingList, DrawingDetails
 
-
 urlpatterns = [
   path('', Home.as_view(), name='home'),
   path('users/register/',CreateUserView.as_view(), name='register'),
@@ -18,4 +17,3 @@ urlpatterns = [
   path('games/drawings/', DrawingList.as_view(), name='drawing-list'), 
   path('games/drawings/<int:id>/', DrawingDetails.as_view(), name='DrawingDetails'),
 ]
-

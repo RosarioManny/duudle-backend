@@ -201,4 +201,3 @@ class DrawingDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Drawing.objects.all()
     serializer_class = DrawingSerializer
     lookup_field = 'id'
-

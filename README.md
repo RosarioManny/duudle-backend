@@ -47,7 +47,6 @@
 
 ## USER STORIES
 
-
 - AAU I want to be able to sign-up for an account if wanted
 - AAU I want to be able to sign-in and out.
 - AAU I want to be able to see a landing page.
@@ -68,7 +67,6 @@
 ![alt text](./README.Images/README-draw.png)
 ![alt text](./README.Images/README-signin-register%20.png)
 ![alt text](./README.Images/README-prompt-win-lose.png)
-
 
 #### Color Palette
 
@@ -151,7 +149,6 @@
 
 ---
 
-
 ## Trello 📋
 
 **Visit the [Trello board](https://trello.com/b/RlAy2kky/pics)**
@@ -209,7 +206,6 @@ We used this as a way to organize our information, models, ideas and more. Allow
 </details>
 </br>
 
-
 **User**
 
 - **Id:** The identification number of a user. This is an auto-created field.
@@ -239,14 +235,18 @@ We used this as a way to organize our information, models, ideas and more. Allow
 
 ### Routes/Paths
 
-
 <img src="./README.Images/README-Routes.png" alt="Routes Visual" width=850/>
-
 
 <details>
 <summary> WEBSITE FLOW </summary>
 <img src="./README.Images/Website Flow.png" alt="Routes Visual" width=850/>
 </details>
+
+### Routes
+
+![alt text](./README.Images/README-Routes.png)
+
+# API Endpoints Documentation
 
 ## User Endpoints
 
@@ -255,6 +255,7 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Endpoint:** `/users/register/`
 - **Method:** `POST`
 - **Description:** Creates a new user account.
+
   </br>
   <img src="./README.Images/User-Register-PM.png" alt="MVP ERD" width=600/>
 
@@ -263,6 +264,7 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Endpoint:** `/users/login/`
 - **Method:** `POST`
 - **Description:** Authenticates a user and returns a token.
+
   </br>
   <img src="./README.Images/User-Sign-In.png" alt="MVP ERD" width=600/>
 
@@ -273,6 +275,7 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Endpoint:** `/games/`
 - **Method:** `GET`
 - **Description:** Retrieves a list of all games.
+
   </br>
   <img src="./README.Images/Game - List Games - PM.png" alt="MVP ERD" width=600/>
 
@@ -281,6 +284,7 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Endpoint:** `/games/<game_id>/`
 - **Method:** `GET`
 - **Description:** Retrieves details of a specific game.
+
   </br>
   <img src="./README.Images/Game - Single Game - PM.png" alt="MVP ERD" width=600/>
 
@@ -291,6 +295,7 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Endpoint:** `/words/`
 - **Method:** `GET`
 - **Description:** Retrieves a list of all words.
+
   </br>
   <img src="./README.Images/Word - List - PM.png" alt="MVP ERD" width=600/>
 
@@ -299,6 +304,7 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Endpoint:** `/words/<word_id>/`
 - **Method:** `GET`
 - **Description:** Retrieves details of a specific word.
+
   </br>
   <img src="./README.Images/Word - Single Word - PM.png" alt="MVP ERD" width=600/>
 
@@ -307,6 +313,7 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Endpoint:** `/words/<word_id>/games/`
 - **Method:** `POST`
 - **Description:** Starts a new game with the specified word.
+
   </br>
   <img src="./README.Images/Game - Create Game - PM.png" alt="MVP ERD" width=600/>
 
@@ -317,6 +324,7 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Endpoint:** `/games/<game_id>/drawings/`
 - **Method:** `GET`
 - **Description:** Retrieves a list of drawings for a specific game.
+
   </br>
   <img src="./README.Images/Drawing - List of Drawing - PM.png" alt="MVP ERD" width=600/>
 
@@ -325,6 +333,7 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Endpoint:** `/games/<game_id>/drawings/`
 - **Method:** `POST`
 - **Description:** Adds a new drawing to a specific game.
+
   </br>
   <img src="./README.Images/Drawing - Create Drawing - PM.png" alt="MVP ERD" width=600/>
 
@@ -341,6 +350,7 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Endpoint:** `/games/<game_id>/`
 - **Method:** `PATCH`
 - **Description:** Updates the game state with a new word, difficulty, and winner information.
+
   </br>
   <img src="./README.Images/Game - Update Game - PM.png" alt="MVP ERD" width=600/>
 
@@ -395,24 +405,20 @@ We used this as a way to organize our information, models, ideas and more. Allow
 - **Purpose:** Get the details of a game
 - **Request:** (GET)(PUT)/(DELETE)
 
-
 #### WordList(generics.ListCreateAPIView)
 
 - **Purpose:** The List of Words
 - **Request:** (POST)
-
 
 #### WordDetail(generics.RetrieveUpdateDestroyAPIView)
 
 - **Purpose:** A single word's details.
 - **Request:** (GET)(PUT)/(DELETE)
 
-
 #### WordGame(generics.CreateAPIView)
 
 - **Purpose:** Creates a Game with a word attached to it. **(START GAME)**
 - **Request:** (POST)
-
 
 #### DrawingList(generics.ListCreateAPIView)
 
@@ -437,4 +443,3 @@ We used this as a way to organize our information, models, ideas and more. Allow
 5. AAU, I want a high-score leaderboard.
 6. AAU, I want multiple modes.
 7. AAU, I want both a redo and an undo button.
-
