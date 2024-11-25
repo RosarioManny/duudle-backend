@@ -84,7 +84,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'main_app',
     'corsheaders',
-    'PIL',
+    # 'PIL',
     'dotenv',
     'requests',
 ]
