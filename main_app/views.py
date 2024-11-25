@@ -12,11 +12,11 @@ from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from django.http import JsonResponse
 from dotenv import load_dotenv
-from io import BytesIO
-from PIL import Image
-import requests
-import base64
-import os
+# from io import BytesIO
+# from PIL import Image
+# import requests
+# import base64
+# import os
 
 load_dotenv()
 VITE_GROQ_API_KEY = os.getenv("VITE_GROQ_API_KEY")

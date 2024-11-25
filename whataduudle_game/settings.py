@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-import environ  
+import environ
 import dj_database_url
 import django_heroku
 
@@ -86,7 +86,7 @@ INSTALLED_APPS = [
     'corsheaders',
     # 'PIL',
     'dotenv',
-    'requests',
+    # 'requests',
 ]
 
 MIDDLEWARE = [
