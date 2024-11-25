@@ -85,7 +85,7 @@ INSTALLED_APPS = [
     'main_app',
     'corsheaders',
     # 'PIL',
-    'dotenv',
+    # 'dotenv',
     # 'requests',
 ]
 
