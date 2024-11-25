@@ -29,10 +29,9 @@ DATABASE_URL=env('DATABASE_URL')
 SECRET_KEY=env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com', 'whataduudle.netlify.app']
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173", 
@@ -40,11 +39,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  
     "https://whataduudle.netlify.app",
     # "insert netlify url here",  # chage this to your netlify app url
-]
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ORIGIN_WHITELIST = [
-    "https://whataduudle.netlify.app"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -156,20 +150,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'whataduudle_game.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': 
-#         dj_database_url.config('DATABASE_URL')
-    
-# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'whataduudle_game',
-    }
+    'default': dj_database_url.config(default=env('DATABASE_URL'))
 }
 
 
