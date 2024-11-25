@@ -41,6 +41,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://whataduudle.netlify.app",
     # "insert netlify url here",  # chage this to your netlify app url
 ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ORIGIN_WHITELIST = [
     "https://whataduudle.netlify.app"
